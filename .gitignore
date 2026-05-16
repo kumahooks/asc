@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+output/
+.playwright-profile/
+visited_links.txt
+AGENTS.md

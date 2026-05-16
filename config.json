@@ -1,0 +1,15 @@
+{
+    "profile_path": ".playwright-profile",
+    "wait_for_auth_seconds": 120,
+    "servers": [
+        {
+            "name": "example-server",
+            "channels": [
+                "1125913860826734692",
+                "1049945527187415050",
+                "573187941334122497",
+                "215946029277642752"
+            ]
+        }
+    ]
+}
