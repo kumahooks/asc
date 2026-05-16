@@ -5,6 +5,7 @@ Authenticates with a user token and provides methods to fetch messages
 from channels.
 """
 
+import sys
 import time
 from typing import List, Optional
 
@@ -12,11 +13,23 @@ import httpx
 
 
 DISCORD_API_BASE = "https://discord.com/api/v9"
-_UA = (
-    "Mozilla/5.0 (X11; Linux x86_64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/147.0.0.0 Safari/537.36"
-)
+
+
+def _build_user_agent() -> str:
+    platform_strings = {
+        "linux": "X11; Linux x86_64",
+        "win32": "Windows NT 10.0; Win64; x64",
+        "darwin": "Macintosh; Intel Mac OS X 10_15_7",
+    }
+    platform_part = platform_strings.get(sys.platform, "X11; Linux x86_64")
+    return (
+        f"Mozilla/5.0 ({platform_part}) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/147.0.0.0 Safari/537.36"
+    )
+
+
+_UA = _build_user_agent()
 
 
 class DiscordAPIError(Exception):

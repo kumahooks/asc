@@ -231,6 +231,11 @@ def _play_sound() -> None:
     sound_path = Path("beep.wav")
     if not sound_path.exists():
         return
+
+    if sys.platform == "win32":
+        _play_sound_windows(str(sound_path))
+        return
+
     for cmd in (
         ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", str(sound_path)],
         ["flatpak", "run", "org.ffmpeg.ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", str(sound_path)],
@@ -244,6 +249,14 @@ def _play_sound() -> None:
             return
         except FileNotFoundError:
             continue
+
+
+def _play_sound_windows(path: str) -> None:
+    try:
+        import winsound
+        winsound.PlaySound(path, winsound.SND_ASYNC | winsound.SND_FILENAME)
+    except Exception:
+        pass
 
 
 def _load_visited_links() -> set[str]:
